@@ -52,10 +52,10 @@ pip install fastapi uvicorn sqlalchemy aiomysql fastapi-mail pwdlib[argon2] aios
 
 编辑 `settings/__init__.py` 配置数据库和邮件服务：
 ```python
-数据库配置
+## 数据库配置
 DB_URI = "mysql+aiomysql://username:password@host:port/database?charset=utf8mb4"
 
-邮件配置
+## 邮件配置
 MAIL_USERNAME="your_email@qq.com"
 MAIL_PASSWORD="your_smtp_password"
 MAIL_FROM="your_email@qq.com"
@@ -67,9 +67,9 @@ MAIL_FROM_NAME="应用名称"
 ### 启动应用
 
 ```bash
-开发模式启动
+# 开发模式启动
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
-生产环境
+# 生产环境
 uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
 ```
 
