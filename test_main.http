@@ -9,4 +9,16 @@ GET http://127.0.0.1:8000/hello/User
 Accept: application/json
 
 ### 发送邮件
-GET http://127.0.0.1:8000/send_email
+GET http://127.0.0.1:8000/auth/code?email=460019140@qq.com
+
+### 注册
+POST http://127.0.0.1:8000/auth/register
+Content-Type: application/json
+
+{
+  "email": "460019140@qq.com",
+  "username": "ccccsd",
+  "password": "111111",
+  "confirm_password": "111111",
+  "code": "3076"
+}
