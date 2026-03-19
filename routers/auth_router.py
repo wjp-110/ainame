@@ -9,9 +9,11 @@ from aiosmtplib import SMTPResponseException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from dependencies import get_mail, get_session
+from models.user import User
 from repository.user_repo import EmailCodeRepository, UserRepository
+from core.auth import AuthHandler as auth_handler
 from schemas import ResponseOut
-from schemas.user import RegisterIn, UserCreateSchema
+from schemas.user import RegisterIn, UserCreateSchema, LoginIn
 
 router = APIRouter(prefix="/auth")
 
@@ -54,3 +56,21 @@ async def register(data: RegisterIn, session: AsyncSession = Depends(get_session
         raise HTTPException(status_code=400, detail="邮箱验证码错误！")
     await user_repo.create(UserCreateSchema(email=data.email, username=data.username, password=data.password))
     return ResponseOut()
+
+@router.post('/login')
+async def login(data: LoginIn, session: AsyncSession = Depends(get_session)):
+    # 创建user_repo对象
+    user_repo = UserRepository(session)
+    # 获取用户
+    user: User | None = await user_repo.get_by_email(str(data.email))
+    if not user:
+        raise HTTPException(status_code=400, detail="用户不存在！")
+    if not user.check_password(data.password):
+        raise HTTPException(status_code=400, detail="密码错误！")
+    # 生成JWToken
+    auth_instance = auth_handler()
+    tokens = auth_instance.encode_login_token(user.id)
+    return {
+        "user": user,
+        "token": tokens
+    }

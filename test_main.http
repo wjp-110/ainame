@@ -22,3 +22,25 @@ Content-Type: application/json
   "confirm_password": "111111",
   "code": "3076"
 }
+
+### 登陆
+
+POST http://127.0.0.1:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "460019140@qq.com",
+  "password": "111111"
+}
+
+### 生成名字
+
+POST http://127.0.0.1:8000/name
+Content-Type: application/json
+
+{
+  "surname": "张",
+  "length": "双字",
+  "gender": "男",
+  "other": "要尽量大气一点，好听一点"
+}

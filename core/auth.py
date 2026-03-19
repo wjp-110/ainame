@@ -39,7 +39,7 @@ class AuthHandler(metaclass=SingletonMeta):
 
     def _encode_token(self, user_id: int, type: TokenTypeEnum):
         payload = dict(
-            iss=user_id,
+            iss=str(user_id),
             sub=str(type.value)
         )
         to_encode = payload.copy()

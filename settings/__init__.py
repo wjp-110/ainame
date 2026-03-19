@@ -12,3 +12,7 @@ MAIL_SERVER="smtp.qq.com"
 MAIL_FROM_NAME="测试ainame"
 MAIL_STARTTLS=True
 MAIL_SSL_TLS=False
+
+JWT_SECRET_KEY = "sdad3ddasdada"
+JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=15)
+JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
